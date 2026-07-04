@@ -1,0 +1,36 @@
+# Data Processing
+pandas>=2.2.0
+numpy>=2.0.0
+
+# HTTP Requests
+requests>=2.32.0
+
+# HTML Parsing
+beautifulsoup4>=4.12.0
+lxml>=5.2.0
+
+# Progress Bar
+tqdm>=4.67.0
+
+# Machine Learning
+scikit-learn>=1.6.0
+
+# Data Visualization
+matplotlib>=3.10.0
+plotly>=6.0.0
+
+# Web Application
+streamlit>=1.45.0
+
+# NLP
+nltk>=3.9.0
+sentence-transformers>=4.1.0
+
+# Jupyter Notebook
+jupyter>=1.1.0
+
+# Environment Variables
+python-dotenv>=1.1.0
+
+# Excel Support
+openpyxl>=3.1.0
