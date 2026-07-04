@@ -1,0 +1,9 @@
+{
+    "MAX_VOCAB_SIZE": 10000,
+    "OOV_TOKEN": "<OOV>",
+    "Total Training Samples": 4677,
+    "Total Unique Words": 13000,
+    "Tokenizer Vocabulary Size": 10000,
+    "Maximum Sequence Length": 1782,
+    "Average Sequence Length": 118.71
+}
