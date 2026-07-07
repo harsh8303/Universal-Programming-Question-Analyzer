@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/banner.png" width="100%" alt="Universal Programming Question Analyzer">
+  <img src="images/Banner.png" width="100%" alt="Universal Programming Question Analyzer">
 </p>
 
 <h1 align="center">🤖 Universal Programming Question Analyzer</h1>
