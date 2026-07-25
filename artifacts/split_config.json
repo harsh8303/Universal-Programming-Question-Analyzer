@@ -1,0 +1,10 @@
+{
+    "Train Samples": 3741,
+    "Validation Samples": 468,
+    "Test Samples": 468,
+    "Random State": 42,
+    "Stratified": true,
+    "Train %": 80,
+    "Validation %": 10,
+    "Test %": 10
+}
