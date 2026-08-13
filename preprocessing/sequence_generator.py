@@ -35,7 +35,7 @@ def generate_sequences():
     df = pd.read_csv(dataset_path)
     
     # 1. Required Columns Validation
-    required_columns = ['clean_description', 'difficulty', 'problem_id', 'platform', 'title', 'tags']
+    required_columns = ['model_text', 'difficulty', 'problem_id', 'platform', 'title', 'tags']
     missing_cols = [col for col in required_columns if col not in df.columns]
     if missing_cols:
         print(f" ERROR: Missing required columns: {missing_cols}. Stopping pipeline.")
@@ -45,7 +45,7 @@ def generate_sequences():
         tokenizer = pickle.load(f)
         
     print("✓ Converting descriptions to sequences...")
-    texts = df['clean_description'].astype(str).tolist()
+    texts = df['model_text'].astype(str).tolist()
     sequences = tokenizer.texts_to_sequences(texts)
     
     # 2. Sequence Length Validation (Prevent crash)

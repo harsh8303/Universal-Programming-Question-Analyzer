@@ -1,0 +1,13 @@
+Accuracy    : 0.5726
+Macro F1    : 0.5738
+Weighted F1 : 0.5730
+
+              precision    recall  f1-score   support
+
+        Easy       0.65      0.53      0.58       140
+        Hard       0.53      0.62      0.57       116
+      Medium       0.56      0.58      0.57       212
+
+    accuracy                           0.57       468
+   macro avg       0.58      0.57      0.57       468
+weighted avg       0.58      0.57      0.57       468

@@ -1,9 +1,9 @@
 {
     "Total Samples": 4677,
-    "Vocabulary Size": 13001,
+    "Vocabulary Size": 14696,
     "Padding": "post",
     "Truncation": "post",
-    "Maximum Sequence Length": 374,
+    "Maximum Sequence Length": 381,
     "Difficulty Classes": [
         "Easy",
         "Hard",

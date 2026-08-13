@@ -44,7 +44,7 @@ def run_tokenizer():
     
     # ✓ Validating Dataset
     print("✓ Validating Dataset Columns...")
-    required_columns = ['clean_description', 'has_description']
+    required_columns = ['model_text', 'has_description']
     missing_cols = [col for col in required_columns if col not in df.columns]
     if missing_cols:
         print(f"ERROR: Missing required columns: {missing_cols}. Stopping pipeline.")
@@ -64,7 +64,7 @@ def run_tokenizer():
     print("✓ Saving Filtered Dataset (tokenizer_dataset.csv)...")
     valid_df.to_csv(filtered_data_path, index=False, encoding='utf-8')
         
-    texts = valid_df['clean_description'].astype(str).tolist()
+    texts = valid_df['model_text'].astype(str).tolist()
     
     # ✓ Building Vocabulary
     print("✓ Building Vocabulary...")

@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 data/
+models/best_distilbert/tf_model.h5
+models/best_distilbert/*.h5
