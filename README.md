@@ -177,6 +177,20 @@ Universal-Programming-Question-Analyzer/
 
 ---
 
+
+---
+
+#  Model Comparison & Architecture Insights
+
+In this project, multiple deep learning architectures were experimented with to solve the programming question analysis and classification tasks:
+
+* **BiGRU & BiLSTM with Attention:** These recurrent models process sequential text step-by-step and utilize a custom Attention mechanism to focus on critical parts of the programming problem statement. They perform efficiently on short-to-medium sequence lengths.
+* **Transformer Architectures:** Unlike sequential recurrent models, Transformers leverage self-attention mechanisms to process the entire sequence simultaneously. This allows them to capture complex long-range dependencies and contextual relationships across the entire problem description much more effectively, yielding superior performance and deeper linguistic understanding.
+
+---
+
+
+
 #  Upcoming Work
 
 - Deep Learning Model
