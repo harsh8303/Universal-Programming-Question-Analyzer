@@ -23,7 +23,7 @@ if ROOT_DIR not in sys.path:
 import config
 
 def plot_training_history(history, models_dir):
-    print("\n✓ Generating Training History Plot...")
+    print("\n Generating Training History Plot...")
     plt.figure(figsize=(12, 4))
     plt.subplot(1, 2, 1)
     plt.plot(history.history['accuracy'], label='Train Accuracy')
@@ -53,7 +53,7 @@ def train_distilbert():
     models_dir = os.path.join(ROOT_DIR, "models")
     os.makedirs(models_dir, exist_ok=True)
     
-    print("✓ Loading Cleaned Dataset...")
+    print(" Loading Cleaned Dataset...")
     df = pd.read_csv(clean_csv_path)
     df = df.dropna(subset=['model_text', 'difficulty'])
     df = df[df['difficulty'].astype(str).str.lower() != 'unknown']
@@ -75,11 +75,11 @@ def train_distilbert():
         X_temp, y_temp, test_size=0.50, random_state=42, stratify=y_temp
     )
     
-    print("✓ Initializing DistilBERT Tokenizer...")
+    print(" Initializing DistilBERT Tokenizer...")
     tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
     max_len = 128
     
-    print("✓ Tokenizing Datasets...")
+    print(" Tokenizing Datasets...")
     train_encodings = tokenizer(X_train, truncation=True, padding="max_length", max_length=max_len, return_tensors="tf")
     val_encodings = tokenizer(X_val, truncation=True, padding="max_length", max_length=max_len, return_tensors="tf")
     test_encodings = tokenizer(X_test, truncation=True, padding="max_length", max_length=max_len, return_tensors="tf")
@@ -88,7 +88,7 @@ def train_distilbert():
     val_x = dict(val_encodings)
     test_x = dict(test_encodings)
     
-    print("✓ Loading Pre-trained TFDistilBertForSequenceClassification...")
+    print(" Loading Pre-trained TFDistilBertForSequenceClassification...")
     model = TFDistilBertForSequenceClassification.from_pretrained(
         'distilbert-base-uncased', 
         num_labels=num_classes
@@ -108,7 +108,7 @@ def train_distilbert():
         monitor="val_loss", factor=0.5, patience=1, min_lr=1e-6, verbose=1
     )
     
-    print("\n🔥 Commencing DistilBERT Fine-Tuning on GPU...\n")
+    print("\n Commencing DistilBERT Fine-Tuning on GPU...\n")
     
     # Batch size increased to 32 because GPU can easily handle it
     history = model.fit(
@@ -122,12 +122,12 @@ def train_distilbert():
     
     print("\n Evaluating Final Model on Test Set...")
     test_loss, test_acc = model.evaluate(test_x, y_test, batch_size=32, verbose=1)
-    print(f"🏆 Final Test Accuracy: {test_acc:.4f}")
+    print(f" Final Test Accuracy: {test_acc:.4f}")
     
     best_model_dir = os.path.join(models_dir, "best_distilbert")
     model.save_pretrained(best_model_dir)
     tokenizer.save_pretrained(best_model_dir)
-    print(f"✓ Best DistilBERT model & tokenizer saved at: {best_model_dir}")
+    print(f" Best DistilBERT model & tokenizer saved at: {best_model_dir}")
     
     with open(os.path.join(models_dir, "training_history_distilbert.json"), "w") as f:
         history_dict = {k: [float(val) for val in v] for k, v in history.history.items()}

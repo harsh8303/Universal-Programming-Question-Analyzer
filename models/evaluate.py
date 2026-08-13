@@ -9,7 +9,6 @@ import pandas as pd
 import tensorflow as tf
 
 # --- Apple Silicon (M1/M2/M3) GPU Hang Fix ---
-# Isko import ke turant baad lagana zaroori hai taaki GPU deadlock na ho
 tf.config.set_visible_devices([], 'GPU')
 
 import matplotlib.pyplot as plt
@@ -23,13 +22,12 @@ if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
 import config
-from attention_layer import AttentionLayer  # Clean common shared import
+from attention_layer import AttentionLayer
 
 # --- Universal Keras 3 Deserialization Safe Patch ---
 from tensorflow.keras.layers import Layer
 from tensorflow.keras.initializers import GlorotUniform
 
-# Layer patch ko infinite loop se bachane ke liye condition
 if not getattr(Layer, '_is_patched', False):
     _original_layer_init = Layer.__init__
     def _patched_layer_init(self, *args, **kwargs):
@@ -38,7 +36,6 @@ if not getattr(Layer, '_is_patched', False):
     Layer.__init__ = _patched_layer_init
     Layer._is_patched = True
 
-# GlorotUniform patch ko infinite loop se bachane ke liye condition
 if not getattr(GlorotUniform, '_is_patched', False):
     _original_glorot_init = GlorotUniform.__init__
     def _patched_glorot_init(self, *args, **kwargs):
@@ -50,7 +47,7 @@ if not getattr(GlorotUniform, '_is_patched', False):
 # ---------------------------------------------
 
 def evaluate_best_model(model_filename):
-    print(f" Starting Advanced Diagnostic Evaluation for {model_filename}...")
+    print(f"Starting evaluation for {model_filename}...")
     
     processed_dir = os.path.join(config.DATA_DIR, "processed")
     artifacts_dir = os.path.join(ROOT_DIR, "artifacts")
@@ -59,66 +56,55 @@ def evaluate_best_model(model_filename):
     
     os.makedirs(results_dir, exist_ok=True)
     
-    # Robust path handling to dynamically generate tags like 'bigru_attention_v1'
     model_tag = Path(model_filename).stem.removeprefix("best_")
     
     # 1. Load Test Data
-    print("✓ Loading Test Data Arrays...")
+    print("Loading test data...")
     X_test = np.load(os.path.join(processed_dir, "X_test.npy"))
     y_test = np.load(os.path.join(processed_dir, "y_test.npy"))
     
     # 2. Load Class Labels Encoder
     encoder_path = os.path.join(artifacts_dir, "difficulty_encoder.pkl")
     if not os.path.exists(encoder_path):
-        print(f" ERROR: Encoder not found at {encoder_path}")
+        print(f"Error: Encoder not found at {encoder_path}")
         sys.exit(1)
         
     with open(encoder_path, 'rb') as f:
         encoder = pickle.load(f)
     class_names = encoder.classes_
     
-    # 3. Load Best Model with Custom Layer Support
+    # 3. Load Best Model
     model_path = os.path.join(models_dir, model_filename)
     if not os.path.exists(model_path):
-        print(f" ERROR: Model checkpoint not found at {model_path}")
+        print(f"Error: Model not found at {model_path}")
         sys.exit(1)
         
-    print(f"✓ Loading Best Model Checkpoint: {model_path}...")
+    print(f"Loading model checkpoint from {model_path}...")
     model = tf.keras.models.load_model(
         model_path, 
         custom_objects={"AttentionLayer": AttentionLayer}
     )
     
-    # 4. Generate Predictions on Unseen Test Data
-    print(f"✓ Total test samples to evaluate: {len(X_test)}")
-    print("✓ Generating Predictions on Test Set (M3 Bypass Mode)...")
-    
-    # M3 Chip GPU deadlock bypass - model.predict ki jagah direct function call
+    # 4. Generate Predictions
+    print(f"Total test samples: {len(X_test)}")
     y_pred_probs = model(X_test, training=False).numpy()
     y_pred = np.argmax(y_pred_probs, axis=1)
     
-    # 5. Compute Additional Metrics
+    # 5. Compute Metrics
     acc = accuracy_score(y_test, y_pred)
     macro_f1 = f1_score(y_test, y_pred, average='macro')
     weighted_f1 = f1_score(y_test, y_pred, average='weighted')
     
-    print("\n" + "="*60)
-    print(f"  OVERALL PERFORMANCE METRICS ({model_tag.upper()})")
-    print("="*60)
+    print("\n" + "="*50)
+    print(f"PERFORMANCE METRICS ({model_tag.upper()})")
+    print("="*50)
     print(f"Accuracy    : {acc:.4f}")
     print(f"Macro F1    : {macro_f1:.4f}")
     print(f"Weighted F1 : {weighted_f1:.4f}")
-    print("="*60)
+    print("="*50)
     
-    # 6. Generate Classification Report
-    print("\n" + "="*60)
-    print(f"  DETAILED CLASSIFICATION REPORT ({model_tag.upper()})")
-    print("="*60)
+    # 6. Generate Classification Report & Save inside results/
     report_text = classification_report(y_test, y_pred, target_names=class_names)
-    print(report_text)
-    print("="*60)
-    
-    # Save Report to TXT and CSV dynamically using model_tag
     report_dict = classification_report(y_test, y_pred, target_names=class_names, output_dict=True)
     report_df = pd.DataFrame(report_dict).transpose()
     
@@ -132,17 +118,12 @@ def evaluate_best_model(model_filename):
         f.write(f"Weighted F1 : {weighted_f1:.4f}\n\n")
         f.write(report_text)
         
-    print(f"✓ Classification report saved to: {results_dir}")
+    print(f"Report saved to results folder.")
     
-    # 7. Generate Confusion Matrix & Heatmap Plot + CSV Export
-    print("✓ Generating Confusion Matrix Heatmap and CSV...")
+    # 7. Generate Confusion Matrix & Save inside results/
     cm = confusion_matrix(y_test, y_pred)
+    cm_df = pd.DataFrame(cm, index=class_names, columns=class_names)
     
-    cm_df = pd.DataFrame(
-        cm,
-        index=class_names,
-        columns=class_names
-    )
     cm_csv_path = os.path.join(results_dir, f"confusion_matrix_{model_tag}.csv")
     cm_df.to_csv(cm_csv_path)
     
@@ -158,12 +139,11 @@ def evaluate_best_model(model_filename):
     plt.savefig(cm_plot_path, dpi=300)
     plt.close()
     
-    print(f" Confusion Matrix plot saved at: {cm_plot_path}")
-    print(f" Confusion Matrix CSV saved at: {cm_csv_path}")
-    print("\nAdvanced Evaluation Successfully Finished!")
+    print(f"Confusion matrix plot saved to results folder.")
+    print("Evaluation finished successfully.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generic Evaluation Script for Deep Learning Models")
+    parser = argparse.ArgumentParser(description="Evaluate deep learning models")
     parser.add_argument(
         "--model", 
         default="best_bigru_attention_v1.keras", 
