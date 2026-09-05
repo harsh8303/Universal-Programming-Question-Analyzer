@@ -2,225 +2,105 @@
   <img src="images/Banner.png" width="100%" alt="Universal Programming Question Analyzer">
 </p>
 
-<h1 align="center">🤖 Universal Programming Question Analyzer</h1>
+<h1 align="center">🤖 Universal Programming Question Analyzer (UPQA)</h1>
 
 <p align="center">
-An End-to-End Deep Learning & NLP Pipeline for Understanding Programming Problems
+An End-to-End Multimodal AI Pipeline (NLP + Computer Vision) for Understanding Algorithmic Complexity
 </p>
 
 <p align="center">
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
-![Keras](https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas)
-![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy)
-![NLTK](https://img.shields.io/badge/NLTK-154F6B?style=for-the-badge)
-
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow">
+<img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" alt="Keras">
+<img src="https://img.shields.io/badge/Hugging_Face-FFAA00?style=for-the-badge&logo=huggingface&logoColor=white" alt="Hugging Face">
+<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" alt="OpenCV">
+<img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
 </p>
 
 ---
 
-#  Project Overview
+## 📌 Project Overview
 
-Universal Programming Question Analyzer is an **End-to-End NLP and Deep Learning project** that aims to understand programming questions collected from multiple coding platforms.
+The **Universal Programming Question Analyzer (UPQA)** is an enterprise-grade, end-to-end **Multimodal AI system** designed to comprehend programming problems and instantly predict their algorithmic difficulty (Easy, Medium, Hard). 
 
-The project builds a unified dataset, performs advanced NLP preprocessing, generates tokenized sequences, and prepares the data for future Seq2Seq and Attention-based Deep Learning models.
-
----
-
-#  Project Highlights
-
-Collected programming problems from multiple coding platforms
-
-- LeetCode
-- Codeforces
-- CodeChef
-- GeeksforGeeks
-
-Built a unified **19-feature master dataset**
-
-Created an advanced NLP preprocessing pipeline
-
-Built a custom tokenizer
-
-Generated padded numerical sequences
-
-Prepared Train / Validation / Test datasets for Deep Learning
+Breaking past standard text classifiers, this project accepts both **raw text and coding screenshots**. It leverages a robust OCR engine for image processing, deep linguistic tokenization, and state-of-the-art Deep Learning models (including Transformers and Custom Attention Mechanisms) to capture the true complexity of algorithmic constraints.
 
 ---
 
-#  Dataset Summary
+## 🚀 Project Highlights
+
+* **Massive Research-Grade Data:** Aggregated programming datasets from 9 global platforms (LeetCode, Codeforces, CodeChef, GeeksforGeeks) and advanced AI research datasets (DeepMind, TACO, APPS, Alpaca, Evol-Instruct).
+* **Multimodal Input (Computer Vision):** Integrated OpenCV and EasyOCR to parse code screenshots in real-time, optimized with 1000px down-scaling and grayscale conversion for a ~20x inference speed boost.
+* **Advanced Deep Learning Architectures:** Fine-tuned **DistilBERT (88.27% Accuracy)** alongside custom-built BiLSTM and BiGRU architectures optimized via KerasTuner.
+* **Custom Mathematical Attention:** Engineered a bespoke Keras `AttentionLayer` to isolate and weigh critical algorithmic keywords and constraints within long problem descriptions.
+* **Production-Ready API:** Packaged the entire NLP and CV pipeline into a dynamic Flask backend with a responsive web interface.
+
+---
+
+## 📊 Dataset Summary
 
 | Feature | Value |
 |---------|---------|
-| Platforms | 4 |
-| Total Problems Collected | **16,720** |
-| High Quality Problems | **4,677** |
-| Dataset Features | **19** |
-| Vocabulary Size | **10,000+** |
-| Maximum Sequence Length | **374 Tokens** |
+| Total Platforms/Sources | **9 Global Datasets** |
+| Raw Problems Collected | **100,000+** |
+| High-Quality Filtered Problems | **72,000+** |
+| Unified Dataset Features | **19** |
+| Vocabulary Size | **10,000+ Specialized Tokens** |
+| Maximum Token Sequence Length | **128 - 512** |
 
 ---
 
-#  Master Dataset
+## 🏗️ System Architecture Pipeline
 
 <p align="center">
-<img src="images/dataset.png" width="100%">
+<img src="images/pipeline.png" width="100%" alt="Pipeline Architecture">
 </p>
 
 ---
 
-#  NLP Pipeline
+## 🔄 The 10-Step Pipeline Flow
 
-<p align="center">
-<img src="images/pipeline.png" width="100%">
-</p>
+### Phase 1: Data Engineering & Preprocessing
+* **01. Data Collection:** Scraped and merged 100,000+ raw challenges via multi-source API connectors.
+* **02. Data Engineering:** Unified 9 diverse schema structures into a single 19-feature master dataset.
+* **03. NLP Cleaning:** Stripped HTML/Markdown noise while strictly preserving code logic, equations, and mathematical constraints.
+* **04. Quality Analysis:** Audited semantic integrity to finalize 72,000+ high-quality problems.
 
----
+### Phase 2: Sequence & Model Preparation
+* **05. Tokenization:** Engineered a custom NLP tokenizer mapped to a 10,000+ word technical vocabulary.
+* **06. Sequence Generation:** Converted textual problems into NumPy arrays with dynamic padding and truncation.
+* **07. Train/Val/Test Split:** Applied stratified splitting (80/10/10) to maintain uniform difficulty distributions across the massive dataset.
 
-#  Pipeline Stages
-
-## Phase 1 — Data Collection
-
-- Connected multiple coding platforms
-- Built connectors for problem collection
-- Generated a unified master dataset
-
----
-
-## Phase 2 — Data Cleaning & Preprocessing
-
-- Removed duplicates
-- Removed HTML tags
-- Removed unnecessary symbols
-- Preserved programming keywords
-- Preserved mathematical expressions
-- Handled missing values
+### Phase 3: AI Modeling & Deployment
+* **08. Deep Learning Models:** Trained DistilBERT, BiLSTM, and BiGRU networks. Achieved peak performance (88.27%) using Transformer architectures and custom attention mechanisms.
+* **09. Image Processing (OCR):** Built a Computer Vision layer (`ocr_utils.py`) to extract clean text from UI screenshots.
+* **10. Production API:** Deployed the full multimodal inference system locally via a Flask server (`app.py`).
 
 ---
 
-## Phase 3 — Data Quality Analysis
+## 💻 Tech Stack
 
-- Audited complete dataset
-- Identified missing descriptions
-- Filtered high-quality problems
-- Finalized 4,677 clean programming problems
-
----
-
-## Phase 4 — Tokenization
-
-- Built custom tokenizer
-- Generated vocabulary
-- Saved tokenizer artifacts
-- Vocabulary Size: **10,000+**
+* **Deep Learning:** TensorFlow, Keras, Hugging Face (Transformers)
+* **Computer Vision:** OpenCV, EasyOCR
+* **Data Engineering:** Pandas, NumPy, Scikit-Learn
+* **Backend & Web:** Python, Flask, HTML/CSS
+* **Visualization:** Matplotlib, Seaborn
 
 ---
 
-## Phase 5 — Sequence Generation
-
-- Converted text into numerical sequences
-- Padding & truncation
-- Label encoding
-- Generated NumPy arrays
+> **Note on Git Best Practices:** To maintain repository health and comply with GitHub's 100MB file limits, massive binary files (including `.keras` checkpoints, `.npy` arrays, and DistilBERT weights) are intentionally ignored via `.gitignore`. This repository focuses purely on production code, training logic, and architectural design.
 
 ---
 
-## Phase 6 — Train / Validation / Test Split
-
-Current Progress
-
-- Stratified Split
-- Train : 80%
-- Validation : 10%
-- Test : 10%
-
-Dataset ready for Deep Learning model training.
-
----
-
-#  Tech Stack
-
-- Python
-- TensorFlow
-- Keras
-- Pandas
-- NumPy
-- NLTK
-- Pickle
-- JSON
-
----
-
-#  Project Structure
-
-```text
-Universal-Programming-Question-Analyzer/
-
-│
-├── artifacts/
-├── connectors/
-├── preprocessing/
-├── scripts/
-├── utils/
-│
-├── images/
-│   ├── banner.png
-│   ├── dataset.png
-│   └── pipeline.png
-│
-├── config.py
-├── requirements.txt
-├── README.md
-```
-
----
-
-
----
-
-#  Model Comparison & Architecture Insights
-
-In this project, multiple deep learning architectures were experimented with to solve the programming question analysis and classification tasks:
-
-* **BiGRU & BiLSTM with Attention:** These recurrent models process sequential text step-by-step and utilize a custom Attention mechanism to focus on critical parts of the programming problem statement. They perform efficiently on short-to-medium sequence lengths.
-* **Transformer Architectures:** Unlike sequential recurrent models, Transformers leverage self-attention mechanisms to process the entire sequence simultaneously. This allows them to capture complex long-range dependencies and contextual relationships across the entire problem description much more effectively, yielding superior performance and deeper linguistic understanding.
-
----
-
-
-
-#  Upcoming Work
-
-- Deep Learning Model
-- Word Embeddings
-- Encoder-Decoder Architecture
-- Seq2Seq Model
-- Attention Mechanism
-- Model Training
-- Model Evaluation
-- Streamlit Deployment
-
----
-
-#  Author
+## 👨‍💻 Author
 
 **Harshit Sahu**
 
-GitHub:
-https://github.com/harsh8303
-
-LinkedIn:
-https://www.linkedin.com/in/harshit-sahu-67119530a/
-
-Email:
-harshitsahu8303@gmail.com
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/harsh8303)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/harshit-sahu-67119530a/)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:harshitsahu8303@gmail.com)
 
 ---
-
 <p align="center">
-
- If you found this project useful, consider giving it a Star.
-
+ If you found this enterprise-scale AI architecture useful, consider giving it a ⭐.
 </p>
