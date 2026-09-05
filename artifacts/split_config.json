@@ -1,7 +1,7 @@
 {
-    "Train Samples": 3741,
-    "Validation Samples": 468,
-    "Test Samples": 468,
+    "Train Samples": 58111,
+    "Validation Samples": 7264,
+    "Test Samples": 7264,
     "Random State": 42,
     "Stratified": true,
     "Train %": 80,

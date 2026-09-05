@@ -1,0 +1,20 @@
+{
+    "Dropout_0.2": {
+        "Dropout_Rate": 0.2,
+        "Best_Validation_Loss": 0.3155476450920105,
+        "Best_Validation_Accuracy": 0.8634361028671265,
+        "Best_Epoch": 3
+    },
+    "Dropout_0.3": {
+        "Dropout_Rate": 0.3,
+        "Best_Validation_Loss": 0.3296631872653961,
+        "Best_Validation_Accuracy": 0.8539372086524963,
+        "Best_Epoch": 2
+    },
+    "Dropout_0.4": {
+        "Dropout_Rate": 0.4,
+        "Best_Validation_Loss": 0.32561081647872925,
+        "Best_Validation_Accuracy": 0.8601321578025818,
+        "Best_Epoch": 2
+    }
+}

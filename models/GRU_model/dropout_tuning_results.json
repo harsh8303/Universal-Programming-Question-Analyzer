@@ -1,0 +1,26 @@
+{
+    "0.2": {
+        "Dropout_Rate": 0.2,
+        "Best_Validation_Loss": 0.32778581976890564,
+        "Best_Validation_Accuracy": 0.8536618947982788,
+        "Best_Epoch": 3
+    },
+    "0.3": {
+        "Dropout_Rate": 0.3,
+        "Best_Validation_Loss": 0.33489537239074707,
+        "Best_Validation_Accuracy": 0.8524228930473328,
+        "Best_Epoch": 2
+    },
+    "0.4": {
+        "Dropout_Rate": 0.4,
+        "Best_Validation_Loss": 0.34058162569999695,
+        "Best_Validation_Accuracy": 0.8511838912963867,
+        "Best_Epoch": 3
+    },
+    "0.5": {
+        "Dropout_Rate": 0.5,
+        "Best_Validation_Loss": 0.32610809803009033,
+        "Best_Validation_Accuracy": 0.8612334728240967,
+        "Best_Epoch": 4
+    }
+}

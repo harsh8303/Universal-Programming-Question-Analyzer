@@ -1,0 +1,20 @@
+{
+    "64": {
+        "Embedding_Dim": 64,
+        "Best_Validation_Loss": 0.32946082949638367,
+        "Best_Validation_Accuracy": 0.854350209236145,
+        "Best_Epoch": 4
+    },
+    "128": {
+        "Embedding_Dim": 128,
+        "Best_Validation_Loss": 0.32187989354133606,
+        "Best_Validation_Accuracy": 0.8642621040344238,
+        "Best_Epoch": 2
+    },
+    "256": {
+        "Embedding_Dim": 256,
+        "Best_Validation_Loss": 0.324556440114975,
+        "Best_Validation_Accuracy": 0.8560022115707397,
+        "Best_Epoch": 2
+    }
+}

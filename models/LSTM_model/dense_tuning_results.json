@@ -1,0 +1,20 @@
+{
+    "Dense_128": {
+        "Dense_Units": 128,
+        "Best_Validation_Loss": 0.3255211114883423,
+        "Best_Validation_Accuracy": 0.8572412133216858,
+        "Best_Epoch": 4
+    },
+    "Dense_64": {
+        "Dense_Units": 64,
+        "Best_Validation_Loss": 0.333241730928421,
+        "Best_Validation_Accuracy": 0.847879946231842,
+        "Best_Epoch": 2
+    },
+    "Dense_32": {
+        "Dense_Units": 32,
+        "Best_Validation_Loss": 0.3287516236305237,
+        "Best_Validation_Accuracy": 0.851459264755249,
+        "Best_Epoch": 3
+    }
+}

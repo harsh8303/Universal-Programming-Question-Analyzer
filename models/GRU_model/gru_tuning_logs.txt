@@ -1,0 +1,17 @@
+KerasTuner Hyperband Search Results (Ran on Google Colab T4 GPU)
+Total Trials: 30
+Total elapsed time: 01h 30m 00s
+
+Trial 30 Complete [00h 03m 40s]
+val_accuracy: 0.8677037358283997
+Best val_accuracy So Far: 0.8741739988327026
+
+==================================================
+ BEST HYPERPARAMETERS FOUND:
+Embedding Dim: 256
+GRU 1 Units  : 128
+GRU 2 Units  : 128
+Dense Units  : 128
+Dropout Rate : 0.4
+Learning Rate: 0.001
+==================================================

@@ -82,11 +82,8 @@ def process_dataset():
     start_time = time.time()  # Track execution time
     print("Starting Phase 2: Data Cleaning (Version 1 Final)...")
     
-    # Input File Handling
-    input_path = os.path.join(config.DATA_DIR, "unified_programming_problems.csv")
-    if not os.path.exists(input_path):
-        print(f" Not found at primary path, checking alternate...")
-        input_path = os.path.join(config.DATA_DIR, "merged", "unified_programming_problems.csv")
+    #  FIX: Seedha merged folder se sahi file uthayenge!
+    input_path = os.path.join(config.DATA_DIR, "merged", "unified_programming_problems.csv")
         
     clean_dir = os.path.join(config.DATA_DIR, "clean")
     os.makedirs(clean_dir, exist_ok=True)
@@ -96,7 +93,7 @@ def process_dataset():
         print(f"Error: Master dataset not found at {input_path}.")
         return
 
-    print(f"📂 Master Dataset loaded from: {input_path}")
+    print(f" Master Dataset loaded from: {input_path}")
     df = pd.read_csv(input_path)
     
     #  Required Columns Validation
@@ -112,11 +109,11 @@ def process_dataset():
     missing_descriptions = df['description'].isna().sum()
     missing_tags = df['tags'].isna().sum()
     
-    print("🧹 Removing duplicates...")
+    print(" Removing duplicates...")
     df.drop_duplicates(subset=['problem_id', 'platform'], inplace=True)
     duplicates_removed = initial_count - len(df)
     
-    print("🛠️ Handling missing values safely...")
+    print(" Handling missing values safely...")
     df.fillna("", inplace=True)
     
     print("Applying NLP Text Cleaning (Yeh thoda time lega, patience rakhna!)...")
@@ -127,6 +124,10 @@ def process_dataset():
     df['word_count'] = df['clean_description'].apply(lambda x: len(str(x).split()) if pd.notna(x) else 0)
     df['has_description'] = df['description_length'] > 0
     df['num_tags'] = df['tags'].apply(count_valid_tags)
+    
+    #  FIXED: Added model_text column explicitly for the Tokenizer
+    print(" Creating 'model_text' feature for deep learning...")
+    df['model_text'] = df['title'].astype(str).fillna('') + ' ' + df['clean_description'].astype(str).fillna('') + ' ' + df['tags'].astype(str).fillna('')
 
     # Sort before saving
     print(" Sorting dataset by platform and problem_id...")

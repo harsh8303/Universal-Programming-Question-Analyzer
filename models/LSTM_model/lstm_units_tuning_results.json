@@ -1,0 +1,23 @@
+{
+    "128_128": {
+        "Layer1_Units": 128,
+        "Layer2_Units": 128,
+        "Best_Validation_Loss": 0.3288412094116211,
+        "Best_Validation_Accuracy": 0.8593061566352844,
+        "Best_Epoch": 2
+    },
+    "128_64": {
+        "Layer1_Units": 128,
+        "Layer2_Units": 64,
+        "Best_Validation_Loss": 0.32421785593032837,
+        "Best_Validation_Accuracy": 0.8599944710731506,
+        "Best_Epoch": 2
+    },
+    "64_32": {
+        "Layer1_Units": 64,
+        "Layer2_Units": 32,
+        "Best_Validation_Loss": 0.32805028557777405,
+        "Best_Validation_Accuracy": 0.8599944710731506,
+        "Best_Epoch": 2
+    }
+}

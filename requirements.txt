@@ -17,3 +17,5 @@ keras
 seaborn
 transformers 
 datasets
+flask
+easyocr

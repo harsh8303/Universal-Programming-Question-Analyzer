@@ -16,29 +16,28 @@ def clean_codechef_data():
     output_path = os.path.join(config.RAW_DATA_DIR, "codechef.csv")
 
     if not os.path.exists(raw_path):
-        print(f"❌ Error: {raw_path} not found. Pehle file ko raw folder mein daalo.")
+        print(f" Error: {raw_path} not found. Pehle file ko raw folder mein daalo.")
         return
 
-    print("⏳ Reading raw CodeChef dataset...")
+    print(" Reading raw CodeChef dataset...")
     df_raw = pd.read_csv(raw_path)
-    
-    # 💡 Bulletproof trick: Sab columns ke naam lower case aur bina extra space ke kar do
+
     df_raw.columns = df_raw.columns.str.strip().str.lower()
     
-    # NaN values ko empty string se replace kar do
+    
     df_raw.fillna("", inplace=True)
 
     df_clean = pd.DataFrame()
 
-    # Difficulty extract karne ka logic (tags ya level se)
+    
     def extract_difficulty(row):
-        # Pehle 'level' column check karo
+        
         lvl = str(row.get('level', '')).lower().strip()
         if lvl in ['school', 'beginner', 'easy']: return "Easy"
         elif lvl in ['medium']: return "Medium"
         elif lvl in ['hard', 'challenge']: return "Hard"
         
-        # Agar 'level' khali hai, toh 'tags' ke andar dhoondho (jaise screenshot mein hai)
+        
         tags = str(row.get('tags', '')).lower()
         if 'easy' in tags or 'beginner' in tags or 'school' in tags: return "Easy"
         elif 'medium' in tags: return "Medium"
@@ -46,7 +45,7 @@ def clean_codechef_data():
         
         return "Unknown"
 
-    print("🔄 Mapping to Universal Schema...")
+    print(" Mapping to Universal Schema...")
     
     # Hamari 19-column mapping (using safe .get() to avoid KeyError)
     df_clean["problem_id"] = df_raw.get("qcode", pd.Series([""] * len(df_raw))).astype(str)
@@ -95,9 +94,9 @@ def clean_codechef_data():
     df_clean = df_clean[df_clean["problem_id"] != ""]
 
     df_clean.to_csv(output_path, index=False)
-    print(f"\n✅ Success! CodeChef data converted to Universal Schema.")
-    print(f"📊 Total Problems Cleaned: {len(df_clean)}")
-    print(f"💾 Saved to: {output_path}")
+    print(f"\n Success! CodeChef data converted to Universal Schema.")
+    print(f" Total Problems Cleaned: {len(df_clean)}")
+    print(f" Saved to: {output_path}")
 
 if __name__ == "__main__":
     clean_codechef_data()
