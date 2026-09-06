@@ -5,8 +5,10 @@ import pandas as pd
 import tensorflow as tf
 import keras
 import warnings
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 from tqdm import tqdm
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
@@ -87,7 +89,7 @@ def evaluate_rnn(model, max_len, name):
     # 32 ke chote batch taaki Mac saans le sake
     for i in tqdm(range(0, len(padded), 32), desc=name):
         batch = padded[i:i+32]
-        preds = model(batch, training=False)   # <--- YEH NAYI LINE DAAL DE
+        preds = model(batch, training=False)
         all_preds.extend(np.argmax(preds, axis=1))
     return np.array(all_preds)
 
@@ -107,12 +109,49 @@ y_pred_bilstm = evaluate_rnn(bilstm_model, 248, "BiLSTM")
 y_pred_distilbert = evaluate_distilbert()
 
 # ==========================================
-#  RESULTS
+#  RESULTS & SAVING ARTIFACTS
 # ==========================================
+RESULTS_DIR = os.path.join(BASE_DIR, "results")
+os.makedirs(RESULTS_DIR, exist_ok=True)
+
 print("\n" + "="*50)
-print("  FINAL MODEL COMPARISON REPORT")
+print("  FINAL MODEL COMPARISON REPORT (SAVING TO RESULTS FOLDER)")
 print("="*50)
 
-for name, preds in [("BiGRU", y_pred_bigru), ("BiLSTM", y_pred_bilstm), ("DistilBERT", y_pred_distilbert)]:
-    print(f"\n{name} Accuracy: {accuracy_score(y_test, preds)*100:.2f}%")
-    print(classification_report(y_test, preds, target_names=encoder.classes_, zero_division=0))
+models_info = [
+    ("final_kerastuner_bigru", y_pred_bigru),
+    ("final_kerastuner_bilstm", y_pred_bilstm),
+    ("final_distilbert", y_pred_distilbert)
+]
+
+for model_name, preds in models_info:
+    print(f"\nEvaluating and Saving metrics for {model_name}...")
+    
+    # 1. Terminal Print & Save TXT Report
+    acc = accuracy_score(y_test, preds) * 100
+    report_str = classification_report(y_test, preds, target_names=encoder.classes_, zero_division=0)
+    
+    print(f"{model_name} Accuracy: {acc:.2f}%")
+    
+    with open(os.path.join(RESULTS_DIR, f"classification_report_{model_name}.txt"), "w") as f:
+        f.write(f"Model: {model_name}\n")
+        f.write(f"Overall Accuracy: {acc:.2f}%\n\n")
+        f.write(report_str)
+
+    # 2. Save CSV Report
+    report_dict = classification_report(y_test, preds, target_names=encoder.classes_, zero_division=0, output_dict=True)
+    pd.DataFrame(report_dict).transpose().to_csv(os.path.join(RESULTS_DIR, f"classification_report_{model_name}.csv"))
+
+    # 3. Generate & Save Confusion Matrix (PNG & CSV)
+    cm = confusion_matrix(y_test, preds)
+    pd.DataFrame(cm, index=encoder.classes_, columns=encoder.classes_).to_csv(os.path.join(RESULTS_DIR, f"confusion_matrix_{model_name}.csv"))
+
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=encoder.classes_, yticklabels=encoder.classes_)
+    plt.title(f'Confusion Matrix - {model_name} ({acc:.2f}%)')
+    plt.ylabel('Actual Difficulty')
+    plt.xlabel('Predicted Difficulty')
+    plt.savefig(os.path.join(RESULTS_DIR, f"confusion_matrix_{model_name}.png"), bbox_inches='tight')
+    plt.close()
+
+print("\n🚀 All new reports and confusion matrices successfully saved in the 'results/' folder!")

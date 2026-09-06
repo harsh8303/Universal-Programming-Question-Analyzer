@@ -1,0 +1,12 @@
+Model: final_kerastuner_bilstm
+Overall Accuracy: 86.25%
+
+              precision    recall  f1-score   support
+
+        Easy       0.89      0.91      0.90      3679
+        Hard       0.88      0.85      0.87      1513
+      Medium       0.80      0.78      0.79      2072
+
+    accuracy                           0.86      7264
+   macro avg       0.86      0.85      0.85      7264
+weighted avg       0.86      0.86      0.86      7264

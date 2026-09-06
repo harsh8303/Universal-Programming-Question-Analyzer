@@ -1,0 +1,12 @@
+Model: final_distilbert
+Overall Accuracy: 88.27%
+
+              precision    recall  f1-score   support
+
+        Easy       0.92      0.93      0.92      3679
+        Hard       0.86      0.88      0.87      1513
+      Medium       0.83      0.79      0.81      2072
+
+    accuracy                           0.88      7264
+   macro avg       0.87      0.87      0.87      7264
+weighted avg       0.88      0.88      0.88      7264
